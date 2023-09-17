@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  back:
+    build:
+      context: ./
+      dockerfile: ./back/Dockerfile
+    depends_on:
+      - db
+    command:
+        - /bin/sh
+        - -c
+        - |
+          alembic upgrade head
+          uvicorn DoItList.main:app --host 0.0.0.0 --port 8080
+    ports:
+      - '8080:8080'
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+    ports:
+      - '5452:5432'
+    volumes:
+      - ./pg:/var/lib/postgresql/data
