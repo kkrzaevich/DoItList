@@ -1,15 +1,15 @@
 <script>
     import { Router, Link, navigate } from "svelte-routing";
 
-    let user = "";
+    let name = "";
     let password = "";
     let result;
 
 	async function login () {
-		try {const res = await fetch('https://httpbin.org/post', {
+		try {const res = await fetch('http://localhost:8080/auth/register', {
 			method: 'POST',
 			body: JSON.stringify({
-				user,
+				name,
 				password
 			})
 		})
@@ -36,7 +36,7 @@
 
         <div class="main-content">
             <div class="buttons">
-                <input type="text" bind:value={user} placeholder="Login"/>
+                <input type="text" bind:value={name} placeholder="Login"/>
                 <input type="password" bind:value={password} placeholder="Password"/>
                 <Button text={"Log in"} clickFunction={()=>{login().then(() => {
                     navigate("/todolist", { replace: true });
