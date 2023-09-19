@@ -3,7 +3,7 @@ services:
   back:
     build:
       context: ./
-      dockerfile: ./back/Dockerfile
+      dockerfile: dockerfile_back
     depends_on:
       - db
     command:
@@ -14,6 +14,16 @@ services:
           uvicorn DoItList.main:app --host 0.0.0.0 --port 8080
     ports:
       - '8080:8080'
+  front:
+    build:
+      context: ./
+      dockerfile: dockerfile_front
+    ports:
+      - "3000:3000"
+    volumes:
+      - "/do-it-list-front/node_modules"
+      - "./do-it-list-front:/do-it-list-front"
+    working_dir: /do-it-list-front
   db:
     image: postgres:14.1-alpine
     restart: always

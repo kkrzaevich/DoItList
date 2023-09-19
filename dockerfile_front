@@ -6,14 +6,13 @@ FROM node:latest
 WORKDIR /do-it-list-front
 
  #Copy Our package.json and package-lock.json file into the app directory to tell node the module we want to use
-COPY package.json /do-it-list-front
-
+COPY do-it-list-front/package.json /package.json
  #To install the dependencies inside our image
 
 RUN npm install
 
  # Copy everything from ourlocal directory to the image in the code directory
-COPY . /do-it-list-front
+COPY do-it-list-front /do-it-list-front
 
  # Navigate to the application entry point and run the image
 
