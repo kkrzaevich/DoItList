@@ -8,11 +8,20 @@
 	async function login () {
 		try {const res = await fetch('http://localhost:8080/auth/register', {
 			method: 'POST',
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
 			body: JSON.stringify({
 				name,
 				password
-			})
+			}),
 		})
+
+        console.log(JSON.stringify({
+				name,
+				password
+			}))
     
         const json = await res.json()
 		result = JSON.stringify(json)
@@ -38,9 +47,15 @@
             <div class="buttons">
                 <input type="text" bind:value={name} placeholder="Login"/>
                 <input type="password" bind:value={password} placeholder="Password"/>
-                <Button text={"Log in"} clickFunction={()=>{login().then(() => {
-                    navigate("/todolist", { replace: true });
-                })}}/>
+                <Button text={"Log in"} clickFunction={()=>{
+                    console.log(JSON.stringify({
+                        name,
+                        password
+                    }));
+                    login().then(() => {
+                        navigate("/todolist", { replace: true });
+                    });
+                }}/>
 
             </div>
             <div class="login-redirect">
