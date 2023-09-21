@@ -27,3 +27,14 @@ async def login_user(response: Response, user_data: UserAuth):
     access_token = create_access_token({'sub': str(user.id)})
     response.set_cookie('todo_access_token', access_token, httponly=True)
     return {'access_token': access_token}
+
+
+@router.post('/logout')
+async def logout_user(response: Response):
+    response.delete_cookie('todo_access_token')
+    return {'status_code': 200}
+
+
+@router.post('/all')
+async def get_all_users(response: Response):
+    return await UsersDAO.find_all()
