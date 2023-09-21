@@ -6,22 +6,29 @@
     let result;
 
 	async function signup () {
-		try {const res = await fetch('https://httpbin.org/post', {
+		try {const res = await fetch('http://localhost:8080/auth/register', {
 			method: 'POST',
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
 			body: JSON.stringify({
-				user,
+				name,
 				password
-			})
+			}),
 		})
+
+        console.log(JSON.stringify({
+				name,
+				password
+			}))
     
         const json = await res.json()
 		result = JSON.stringify(json)
-        console.log(result);
     } catch(err) {
             alert(err.message)
         }
 		
-
 	}
 
     import Button from "../Button.svelte";

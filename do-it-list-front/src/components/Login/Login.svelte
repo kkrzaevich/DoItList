@@ -6,7 +6,7 @@
     let result;
 
 	async function login () {
-		try {const res = await fetch('http://localhost:8080/auth/register', {
+		try {const res = await fetch('http://localhost:8080/auth/login', {
 			method: 'POST',
             mode: "cors",
             headers: {
@@ -48,10 +48,6 @@
                 <input type="text" bind:value={name} placeholder="Login"/>
                 <input type="password" bind:value={password} placeholder="Password"/>
                 <Button text={"Log in"} clickFunction={()=>{
-                    console.log(JSON.stringify({
-                        name,
-                        password
-                    }));
                     login().then(() => {
                         navigate("/todolist", { replace: true });
                     });
