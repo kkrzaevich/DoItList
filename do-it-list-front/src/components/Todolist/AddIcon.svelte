@@ -1,0 +1,10 @@
+<script>
+    export let color="white";
+</script>
+
+<svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M26 50.3528C39.2548 50.3528 50 39.6076 50 26.3528C50 13.0979 39.2548 2.35278 26 2.35278C12.7452 2.35278 2 13.0979 2 26.3528C2 39.6076 12.7452 50.3528 26 50.3528Z" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M15.7139 26.3528H36.2853" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M26 16.067V36.6385" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+    

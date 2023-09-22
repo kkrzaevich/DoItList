@@ -1,7 +1,8 @@
 <script>
     import { Router, Link, navigate } from "svelte-routing";
+    import { userName } from "../../stores";
 
-    let user = "";
+    let name = "";
     let password = "";
     let result;
 
@@ -25,6 +26,7 @@
     
         const json = await res.json()
 		result = JSON.stringify(json)
+        userName.set(name);
     } catch(err) {
             alert(err.message)
         }
@@ -45,7 +47,7 @@
 
         <div class="main-content">
             <div class="buttons">
-                <input type="text" bind:value={user} placeholder="Login"/>
+                <input type="text" bind:value={name} placeholder="Login"/>
                 <input type="password" bind:value={password} placeholder="Password"/>
                 <Button text={"Create account"} clickFunction={()=>{signup().then(() => {
                     navigate("/todolist", { replace: true });

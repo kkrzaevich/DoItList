@@ -1,5 +1,6 @@
 <script>
     import { Router, Link, navigate } from "svelte-routing";
+    import { userName } from "../../stores";
 
     let name = "";
     let password = "";
@@ -25,6 +26,7 @@
     
         const json = await res.json()
 		result = JSON.stringify(json)
+        userName.set(name);
     } catch(err) {
             alert(err.message)
         }
