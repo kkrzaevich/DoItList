@@ -6,6 +6,8 @@
     let password = "";
     let result;
 
+    let errorMessage = {text: "", opacity: "0"};
+
 	async function signup () {
 		try {const res = await fetch('http://localhost:8080/auth/register', {
 			method: 'POST',
@@ -21,7 +23,8 @@
 
         if (!res.ok) {
             let message = await res.json();
-            console.log(message.detail);
+            errorMessage.text = message.detail;
+            errorMessage.opacity = "1";
             throw new Error(`An error has occured: ${res.status}`)
         } else {
             const json = await res.json()
@@ -45,30 +48,34 @@
     export let url = "";
 </script>
 
-<main>
-    <section>
-        <img src={logoScr} alt={logoAlt}>
-
-        <div class="main-content">
-            <div class="buttons">
-                <input type="text" bind:value={name} placeholder="Login"/>
-                <input type="password" bind:value={password} placeholder="Password"/>
-                <Button text={"Create account"} clickFunction={signup}/>
-
+<div class="all">
+    <p class="subtext-text" style="opacity: {errorMessage.opacity};">{errorMessage.text}</p>
+    <main>
+        <section>
+            <img src={logoScr} alt={logoAlt}>
+    
+            <div class="main-content">
+                <div class="buttons">
+                    <input type="text" bind:value={name} placeholder="Login"/>
+                    <input type="password" bind:value={password} placeholder="Password"/>
+                    <Button text={"Create account"} clickFunction={signup}/>
+    
+                </div>
+                <div class="login-redirect">
+                    <p class="login-text">Already have an account? &nbsp</p>
+                    <Router {url}>
+                          <Link to="/login"><p class="login-link">Log in</p></Link>
+                    </Router>
+                </div>
             </div>
-            <div class="login-redirect">
-                <p class="login-text">Already have an account? &nbsp</p>
-                <Router {url}>
-                      <Link to="/login"><p class="login-link">Log in</p></Link>
-                </Router>
-            </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
+</div>
 
 <!-- <p>Result: {result}</p> -->
 
 <style>
+
     main {
         display: flex;
         padding: 100px 529px;
@@ -78,6 +85,7 @@
         gap: 10px;
         flex-wrap: wrap;
         background: var(--white, #FFF);
+        position: relative;
     }
 
     section {
@@ -167,5 +175,24 @@
 
     .login-link:hover {
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .subtext-text {
+        color: var(--black, #000);
+        /* Medium-bold */
+        font-family: Roboto;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        position: fixed;
+        left: 15vw;
+        top: 50vh;
+
+        transition: opacity 1s;
+
+        z-index: 2;
+        filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.5));
     }
 </style>

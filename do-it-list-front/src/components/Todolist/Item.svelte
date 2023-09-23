@@ -25,8 +25,8 @@
 </script>
 
 <main>
-    <input class="name" type="text" bind:value={name} disabled={editDisabled}/>
-    <input class="description" type="text" bind:value={description} disabled={editDisabled}/>
+    <input class="name {editDisabled ? '' : 'active'}" type="text" bind:value={name} disabled={editDisabled}/>
+    <input class="description {editDisabled ? '' : 'active'}" type="text" bind:value={description} disabled={editDisabled}/>
     <div>
             <button on:click={() => {if (!editDisabled) {pressEdit()};editDisabled = !editDisabled}}>
                 <img class="edit" src="/edit.svg" alt="edit item">
@@ -92,5 +92,21 @@
         width: 28.444px;
         height: 32px;
         fill: var(--black, #000);
+    }
+
+    button {
+        transition: filter 0.25s;
+    }
+
+    button:hover {
+        filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.35));
+    }
+
+    .active {
+        transition: filter 0.5s;        
+    }
+
+    .active {
+        filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.35));
     }
 </style>

@@ -114,6 +114,12 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+
+        transition: text-shadow 0.5s;
+    }
+
+    .subtext-link:hover {
+        text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     }
 </style>
 

@@ -7,4 +7,14 @@
     <path d="M15.7139 26.3528H36.2853" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M26 16.067V36.6385" stroke={color} stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
+
+<style>
+    svg {
+        transition: filter 0.25s;
+    }
+
+    svg:hover {
+        filter: drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.35));
+    }
+</style>
     

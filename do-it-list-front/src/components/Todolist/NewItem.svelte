@@ -169,6 +169,20 @@
         align-self: stretch;
     }
 
+    input {
+        transition: filter 0.5s;
+    }
 
+    input:hover {
+        filter: drop-shadow(0px 0px 8px rgba(255, 255, 255, 1));
+    }
+
+    button {
+        transition: filter 0.25s;
+    }
+
+    button:hover {
+        filter: drop-shadow(0px 0px 5px rgba(255, 255, 255, 1));
+    }
 
 </style>

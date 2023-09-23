@@ -6,6 +6,8 @@
     let password = "";
     let result;
 
+    let errorMessage = {text: "", opacity: "0"};
+
 	async function login () {
 		try {const res = await fetch('http://localhost:8080/auth/login', {
 			method: 'POST',
@@ -19,16 +21,21 @@
 			}),
 		})
 
-        console.log(JSON.stringify({
-				name,
-				password
-			}))
+        if (!res.ok) {
+            let message = await res.json();
+            errorMessage.text = message.detail;
+            errorMessage.opacity = "1";
+            throw new Error(`An error has occured: ${res.status}`)
+        } else {
+            const json = await res.json()
+            result = JSON.stringify(json)
+            userName.set(name);
+            navigate("/todolist", { replace: true });
+        }
     
-        const json = await res.json()
-		result = JSON.stringify(json)
-        userName.set(name);
+
     } catch(err) {
-            alert(err.message)
+            throw new Error(`An error has occured: ${err.message}`)
         }
 		
 	}
@@ -41,30 +48,33 @@
     export let url = "";
 </script>
 
-<main>
-    <section>
-        <img src={logoScr} alt={logoAlt}>
+<div class="all">
+    <p class="subtext-text" style="opacity: {errorMessage.opacity};">{errorMessage.text}</p>
+    <main>
+        <section>
+            <img src={logoScr} alt={logoAlt}>
 
-        <div class="main-content">
-            <div class="buttons">
-                <input type="text" bind:value={name} placeholder="Login"/>
-                <input type="password" bind:value={password} placeholder="Password"/>
-                <Button text={"Log in"} clickFunction={()=>{
-                    login().then(() => {
-                        navigate("/todolist", { replace: true });
-                    });
-                }}/>
+            <div class="main-content">
+                <div class="buttons">
+                    <input type="text" bind:value={name} placeholder="Login"/>
+                    <input type="password" bind:value={password} placeholder="Password"/>
+                    <Button text={"Log in"} clickFunction={()=>{
+                        login().then(() => {
+                            navigate("/todolist", { replace: true });
+                        });
+                    }}/>
 
+                </div>
+                <div class="login-redirect">
+                    <p class="login-text">Do not have an account? &nbsp</p>
+                    <Router {url}>
+                        <Link to="/signup"><p class="login-link">Sign up</p></Link>
+                    </Router>
+                </div>
             </div>
-            <div class="login-redirect">
-                <p class="login-text">Do not have an account? &nbsp</p>
-                <Router {url}>
-                      <Link to="/signup"><p class="login-link">Sign up</p></Link>
-                </Router>
-            </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
+</div>
 
 <!-- <p>Result: {result}</p> -->
 
@@ -167,5 +177,24 @@
 
     .login-link:hover {
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+    }
+
+    .subtext-text {
+        color: var(--black, #000);
+        /* Medium-bold */
+        font-family: Roboto;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        position: fixed;
+        left: 15vw;
+        top: 50vh;
+
+        transition: opacity 1s;
+
+        z-index: 2;
+        filter: drop-shadow(0px 0px 25px rgba(0, 0, 0, 0.5));
     }
 </style>
