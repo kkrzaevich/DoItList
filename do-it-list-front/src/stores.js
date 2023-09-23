@@ -4,12 +4,21 @@ export const list = writable([]);
 export const userName = writable("Oleg");
 
 export async function getList () {
-    try {
-        const response = await fetch('http://localhost:8080/list/get', {method: 'GET'})
-        list.set(await response.json())
-    } catch(err) {
-        throw new Error(err.message)
+    try {const res = await fetch('http://localhost:8080/list/get', {
+        method: 'GET',
+        mode: "cors",
+    })
+
+    if (!res.ok) {
+        throw new Error(`An error has occured: ${res.status}`)
+    } else {
+        list.set(await res.json())
     }
+
+} catch(err) {
+        throw new Error(`An error has occured: ${err.message}`)
+    }
+    
 }
 
 export async function addItem (item) {
@@ -21,8 +30,14 @@ export async function addItem (item) {
         },
         body: JSON.stringify(item),
     })
+
+    if (!res.ok) {
+        throw new Error(`An error has occured: ${res.status}`)
+    } else {
+        getList()
+    }
 } catch(err) {
-        alert(err.message)
+        throw new Error(`An error has occured: ${err.message}`)
     }
 }
 
@@ -30,8 +45,19 @@ export async function deleteItem (itemId) {
     try {const res = await fetch('http://localhost:8080/list/delete', {
         method: 'DELETE',
         mode: "cors",
-        body: itemId,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            itemId: itemId
+        }),
     })
+
+    if (!res.ok) {
+        throw new Error(`An error has occured: ${res.status}`)
+    } else {
+        getList()
+    }
 } catch(err) {
         alert(err.message)
     }
@@ -46,8 +72,14 @@ export async function editItem (item) {
         },
         body: JSON.stringify(item),
     })
+
+    if (!res.ok) {
+        throw new Error(`An error has occured: ${res.status}`)
+    } else {
+        getList()
+    }
 } catch(err) {
-        alert(err.message)
+        throw new Error(`An error has occured: ${err.message}`)
     }
 }
 
