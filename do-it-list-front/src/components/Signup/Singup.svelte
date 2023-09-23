@@ -19,16 +19,20 @@
 			}),
 		})
 
-        console.log(JSON.stringify({
-				name,
-				password
-			}))
+        if (!res.ok) {
+            let message = await res.json();
+            console.log(message.detail);
+            throw new Error(`An error has occured: ${res.status}`)
+        } else {
+            const json = await res.json()
+            result = JSON.stringify(json)
+            userName.set(name);
+            navigate("/todolist", { replace: true });
+        }
     
-        const json = await res.json()
-		result = JSON.stringify(json)
-        userName.set(name);
+
     } catch(err) {
-            alert(err.message)
+            throw new Error(`An error has occured: ${err.message}`)
         }
 		
 	}
@@ -49,9 +53,7 @@
             <div class="buttons">
                 <input type="text" bind:value={name} placeholder="Login"/>
                 <input type="password" bind:value={password} placeholder="Password"/>
-                <Button text={"Create account"} clickFunction={()=>{signup().then(() => {
-                    navigate("/todolist", { replace: true });
-                })}}/>
+                <Button text={"Create account"} clickFunction={signup}/>
 
             </div>
             <div class="login-redirect">

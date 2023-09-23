@@ -37,3 +37,19 @@ export async function deleteItem (itemId) {
     }
 }
 
+export async function editItem (item) {
+    try {const res = await fetch('http://localhost:8080/list/edit', {
+        method: 'POST',
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+    })
+} catch(err) {
+        alert(err.message)
+    }
+}
+
+
+

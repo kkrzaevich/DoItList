@@ -1,6 +1,7 @@
 <script>
     import { deleteItem } from "../../stores";
     import { getList } from "../../stores";
+    import { editItem } from "../../stores";
 
     export let name="Eat";
     export let itemId="1";
@@ -11,15 +12,25 @@
             itemId
         ).then(getList)
     }
+
+    const pressEdit = () => {
+        editItem({
+            name,
+            description,
+            itemId
+        }).then(getList)
+    }
+
+    let editDisabled = true;
 </script>
 
 <main>
-    <h1>{name}</h1>
-    <p>{description}</p>
+    <input class="name" type="text" bind:value={name} disabled={editDisabled}/>
+    <input class="description" type="text" bind:value={description} disabled={editDisabled}/>
     <div>
-        <button on:click={() => {}}>
-            <img class="edit" src="/edit.svg" alt="edit item">
-        </button>
+            <button on:click={() => {if (!editDisabled) {pressEdit()};editDisabled = !editDisabled}}>
+                <img class="edit" src="/edit.svg" alt="edit item">
+            </button>
         <button on:click={pressDelete}>
             <img class="delete" src="/delete.svg" alt="delete item">
         </button>
@@ -41,7 +52,7 @@
         background: var(--white, #FFF);
     }
 
-    h1 {
+    .name {
         align-self: stretch;
         color: var(--black, #000);
         /* Large-bold */
@@ -52,7 +63,7 @@
         line-height: normal;
     }
 
-    p {
+    .description {
         align-self: stretch;
         color: var(--black, #000);
         /* Medium */
