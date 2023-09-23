@@ -4,6 +4,8 @@
     import { Router, Link, Route } from "svelte-routing";
     import { userName } from "../../stores";
     import { list } from "../../stores";
+    import { onMount } from 'svelte';
+    import { getList } from "../../stores";
 
     let localList = [];
 
@@ -15,6 +17,10 @@
 
     userName.subscribe((name) => (user = name))
     export let url = "";
+
+    onMount(() => {
+		getList()
+	});
 </script>
 <main>
     <div class="subtext">
@@ -30,7 +36,7 @@
                 <NewItem />
                 <div class="items">
                     {#each localList as item}
-                        <Item name={item.name} description={item.description} itemId={item.itemId}/>
+                        <Item name={item.name} description={item.description} itemId={item.itemId} />
                     {/each}
                 </div>
             </div>
