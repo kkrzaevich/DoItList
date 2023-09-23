@@ -1,6 +1,5 @@
 <script>
     import { addItem } from "../../stores";
-    import { getList } from "../../stores";
     import AddIcon from "./AddIcon.svelte";
     import { fade } from 'svelte/transition';
 
@@ -13,7 +12,7 @@
             name,
             description,
             itemId
-        }).then(getList)
+        })
     }
 
     let toggle = false;

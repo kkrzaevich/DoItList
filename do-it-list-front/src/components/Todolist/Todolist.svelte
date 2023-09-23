@@ -3,6 +3,11 @@
     import NewItem from "./NewItem.svelte";
     import { Router, Link, Route } from "svelte-routing";
     import { userName } from "../../stores";
+    import { list } from "../../stores";
+
+    let localList = [];
+
+    list.subscribe((list) => (localList = [...list]))
 
     let logoScr = "/logo.svg";
     let logoAlt = "do it list logo";
@@ -24,12 +29,9 @@
             <div class="list">
                 <NewItem />
                 <div class="items">
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
-                    <Item />
+                    {#each localList as item}
+                        <Item name={item.name} description={item.description} itemId={item.itemId}/>
+                    {/each}
                 </div>
             </div>
         </div>

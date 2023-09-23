@@ -10,7 +10,7 @@
     const pressDelete = () => {
         deleteItem(
             itemId
-        ).then(getList)
+        )
     }
 
     const pressEdit = () => {
@@ -18,7 +18,7 @@
             name,
             description,
             itemId
-        }).then(getList)
+        })
     }
 
     let editDisabled = true;
