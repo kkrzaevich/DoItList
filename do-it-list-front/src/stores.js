@@ -5,6 +5,7 @@ export const userName = writable("Oleg");
 
 export async function getList () {
     try {const res = await fetch('http://localhost:8080/items', {
+        credentials:'include',
         method: 'GET',
         mode: "cors",
     })
@@ -22,7 +23,8 @@ export async function getList () {
 }
 
 export async function addItem (item) {
-    try {const res = await fetch('http://localhost:8080/list/add', {
+    try {const res = await fetch('http://localhost:8080/items', {
+        credentials:'include',
         method: 'POST',
         mode: "cors",
         headers: {

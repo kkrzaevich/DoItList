@@ -1,6 +1,6 @@
 <script>
-    import { Router, Link, navigate } from "svelte-routing";
-    import { userName } from "../../stores";
+    import {Router, Link, navigate} from "svelte-routing";
+    import {userName} from "../../stores";
 
     let name = "";
     let password = "";
@@ -8,37 +8,39 @@
 
     let errorMessage = {text: "", opacity: "0"};
 
-	async function login () {
-		try {const res = await fetch('http://localhost:8080/auth/login', {
-			method: 'POST',
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-			body: JSON.stringify({
-				name,
-				password
-			}),
-		})
+    async function login() {
+        try {
+            const res = await fetch('http://localhost:8080/auth/login', {
+                credentials: 'include',
+                method: 'POST',
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    password
+                }),
+            })
 
-        if (!res.ok) {
-            let message = await res.json();
-            errorMessage.text = message.detail;
-            errorMessage.opacity = "1";
-            throw new Error(`An error has occured: ${res.status}`)
-        } else {
-            const json = await res.json()
-            result = JSON.stringify(json)
-            userName.set(name);
-            navigate("/todolist", { replace: true });
-        }
-    
+            if (!res.ok) {
+                let message = await res.json();
+                errorMessage.text = message.detail;
+                errorMessage.opacity = "1";
+                throw new Error(`An error has occured: ${res.status}`)
+            } else {
+                const json = await res.json()
+                result = JSON.stringify(json)
+                userName.set(name);
+                navigate("/todolist", {replace: true});
+            }
 
-    } catch(err) {
+
+        } catch (err) {
             throw new Error(`An error has occured: ${err.message}`)
         }
-		
-	}
+
+    }
 
     import Button from "../Button.svelte";
 

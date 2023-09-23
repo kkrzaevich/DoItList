@@ -14,12 +14,12 @@ router = APIRouter(prefix='/items',
                    tags=['Items'])
 
 
-@router.get('/')
+@router.get('')
 async def get_all_items(user: Users = Depends(get_current_active_user)) -> list[SItems]:
     return await ItemsDAO.get_all(user_id=user.id)
 
 
-@router.post('/')
+@router.post('')
 async def add_new_item(item_data: SItems, user: Users = Depends(get_current_active_user)):
     item = await ItemsDAO.add_item(name=item_data.name, descriptions=item_data.descriptions, user_id=user.id)
     if not item:
