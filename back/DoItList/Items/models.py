@@ -8,6 +8,6 @@ class Items(Base):
     __tablename__ = 'items'
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String, nullable=False)
-    descriptions = Column(String)
+    description = Column(String)
     user_id = Column(ForeignKey('users.id'))
     user = relationship('Users', back_populates='items')
