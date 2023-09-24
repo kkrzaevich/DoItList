@@ -16,7 +16,7 @@ class ItemsDAO:
 
     @classmethod
     async def add_item(cls, **data):
-        query = insert(cls.model).values(**data).returning(cls.model.id, cls.model.name, cls.model.descriptions,
+        query = insert(cls.model).values(**data).returning(cls.model.id, cls.model.name, cls.model.description,
                                                            cls.model.user_id)
         async with async_session_maker() as session:
             result = await session.execute(query)

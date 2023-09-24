@@ -36,7 +36,7 @@
                 <NewItem />
                 <div class="items">
                     {#each localList as item}
-                        <Item name={item.name} description={item.descriptions} itemId={item.itemId} />
+                        <Item name={item.name} description={item.description} itemId={item.itemId} />
                     {/each}
                 </div>
             </div>

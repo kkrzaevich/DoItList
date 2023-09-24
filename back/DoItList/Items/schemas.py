@@ -2,5 +2,6 @@ from pydantic import BaseModel
 
 
 class SItems(BaseModel):
+    id: int
     name: str
-    descriptions: str
+    description: str
