@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const list = writable([]);
-export const userName = writable("Oleg");
+export const userName = writable(document.cookie);
 
 export async function getList () {
     try {const res = await fetch('http://localhost:8080/items', {
@@ -23,7 +23,7 @@ export async function getList () {
 }
 
 export async function addItem (item) {
-    try {const res = await fetch('http://localhost:8080/items', {
+    try {const res = await fetch(`http://localhost:8080/items/`, {
         credentials:'include',
         method: 'POST',
         mode: "cors",
@@ -43,16 +43,17 @@ export async function addItem (item) {
     }
 }
 
-export async function deleteItem (itemId) {
-    try {const res = await fetch('http://localhost:8080/list/delete', {
+export async function deleteItem (id) {
+    try {const res = await fetch(`http://localhost:8080/items/${id}`, {
+        credentials:'include',
         method: 'DELETE',
         mode: "cors",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            itemId: itemId
-        }),
+        // headers: {
+        //     "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify({
+        //     id: id
+        // }),
     })
 
     if (!res.ok) {
@@ -66,8 +67,9 @@ export async function deleteItem (itemId) {
 }
 
 export async function editItem (item) {
-    try {const res = await fetch('http://localhost:8080/list/edit', {
-        method: 'POST',
+    try {const res = await fetch(`http://localhost:8080/items/${item.id}`, {
+        credentials:'include',
+        method: 'PUT',
         mode: "cors",
         headers: {
             "Content-Type": "application/json",

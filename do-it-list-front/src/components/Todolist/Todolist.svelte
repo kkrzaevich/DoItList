@@ -13,13 +13,14 @@
 
     let logoScr = "/logo.svg";
     let logoAlt = "do it list logo";
-    let user = "Oleg"
+    let user = document.cookie;
 
-    userName.subscribe((name) => (user = name))
+    userName.subscribe((name) => {user = name})
     export let url = "";
 
     onMount(() => {
-		getList()
+		getList();
+        console.log(document.cookie)
 	});
 </script>
 <main>
@@ -36,7 +37,7 @@
                 <NewItem />
                 <div class="items">
                     {#each localList as item}
-                        <Item name={item.name} description={item.description} itemId={item.itemId} />
+                        <Item name={item.name} description={item.description} id={item.id} />
                     {/each}
                 </div>
             </div>

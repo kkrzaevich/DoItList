@@ -4,12 +4,12 @@
     import { editItem } from "../../stores";
 
     export let name="Eat";
-    export let itemId="1";
+    export let id="1";
     export let description="I need to eat surströmming today";
 
     const pressDelete = () => {
         deleteItem(
-            itemId
+            id
         )
     }
 
@@ -17,7 +17,7 @@
         editItem({
             name,
             description,
-            itemId
+            id
         })
     }
 

@@ -30,6 +30,7 @@
             const json = await res.json()
             result = JSON.stringify(json)
             userName.set(name);
+            document.cookie = `${name}`; 
             navigate("/todolist", { replace: true });
         }
     

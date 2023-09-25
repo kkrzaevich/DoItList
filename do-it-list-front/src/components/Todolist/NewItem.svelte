@@ -4,14 +4,14 @@
     import { fade } from 'svelte/transition';
 
     let name;
-    let itemId;
+    let id;
     let description;
 
     const pressAdd = () => {
         addItem({
             name,
             description,
-            itemId
+            id
         })
     }
 
