@@ -4,11 +4,12 @@ from DoItList.Users.models import Users
 
 from DoItList.Users.dependencies import get_current_active_user
 
-from DoItList.Items.schemas import SItems
+from DoItList.Items.schemas import SItems, SItemsRequest
 from pydantic import TypeAdapter
 from starlette import status
 
 from DoItList.Items.dao import ItemsDAO
+
 
 router = APIRouter(prefix='/items',
                    tags=['Items'])
@@ -20,7 +21,7 @@ async def get_all_items(user: Users = Depends(get_current_active_user)) -> list[
 
 
 @router.post('')
-async def add_new_item(item_data: SItems, user: Users = Depends(get_current_active_user)):
+async def add_new_item(item_data: SItemsRequest, user: Users = Depends(get_current_active_user)):
     item = await ItemsDAO.add_item(name=item_data.name, description=item_data.description, user_id=user.id)
     if not item:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
